@@ -1,10 +1,10 @@
-//! # mmaster - a library for masterminds
+//! # modm - a library for masterminds
 
 /// add two numbers together
 ///
 /// ```
 /// let arg = 5;
-/// let ans = mmaster::add_one(arg);
+/// let ans = modm::add_one(arg);
 ///
 /// assert_eq!(6, ans);
 ///
