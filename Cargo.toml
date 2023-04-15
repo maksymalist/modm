@@ -1,5 +1,9 @@
 [package]
 name = "modm"
+description = "A git like cli tool for managing your ML models"
+repository = "https://github.com/maksymalist/modm"
+keywords = ["cli", "machine learning", "model"]
+license = "MIT"
 version = "0.1.0"
 edition = "2021"
 authors = ["maksymalist"]
