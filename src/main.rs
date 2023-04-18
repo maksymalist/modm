@@ -18,11 +18,11 @@ struct Cli {
 
 #[derive(Debug, Subcommand)]
 enum Commands {
-    /// Clones repos
-    #[clap(arg_required_else_help = true)]
-    Clone {
-        /// The remote to clone
-        remote: String,
+    // Watches the remote repository for changes
+    Watch {
+        // optional flag which turns of the logging
+        #[clap(long)]
+        nolog: bool,
     },
 
     // Initializes the modm repository in the .modm folder
@@ -35,8 +35,12 @@ fn main() -> Result <(), ErrorKind> {
     let args = Cli::parse();
 
     match args.command {
-        Commands::Clone { remote } => {
-            println!("Cloning {}", remote);
+        Commands::Watch { nolog } => {
+            if nolog {
+                println!("nolog is on");
+            } else {
+                println!("nolog is off");
+            }
         }
         Commands::Init => {
            if let Err(e) = init_modm() {

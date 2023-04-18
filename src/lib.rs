@@ -3,6 +3,11 @@ use std::{fs, io::Error, any::Any};
 use serde::{Serialize, Deserialize};
 use dialoguer::{theme::ColorfulTheme, Input};
 use std::path::Path;
+use std::env;
+use std::path::PathBuf;
+
+mod utils;
+use utils::{AuthorConfig, Config, GitHubConfig, ModelConfig};
 
 /// initializes the model repository in the .modm folder
 ///
@@ -28,9 +33,11 @@ use std::path::Path;
 ///
 /// ```
 pub fn init_repository() -> Result<(), Error> {
+    let current_dir = env::current_dir().unwrap();
     let folder_name = ".modm";
+    let full_path = current_dir.join(folder_name);
 
-    if let Err(e) = fs::create_dir(folder_name) {
+    if let Err(e) = fs::create_dir(full_path) {
         println!(".modm repository already exists");
         return Err(e);
     } else {
@@ -40,34 +47,10 @@ pub fn init_repository() -> Result<(), Error> {
     return Ok(())
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-struct Config {
-    model: ModelConfig,
-    github: GitHubConfig,
-    author: AuthorConfig,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct ModelConfig {
-    name: String,
-    version: String,
-    directory: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct GitHubConfig {
-    repo: String,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-struct AuthorConfig {
-    author: String,
-    email: String,
-}
-
-
 /// creates the model config file
 pub fn create_config() -> Result<(), Error> {
+
+    let current_dir = env::current_dir().unwrap();
 
     let model_name: String = Input::with_theme(&ColorfulTheme::default())
         .with_prompt("Model name: ")
@@ -119,7 +102,9 @@ pub fn create_config() -> Result<(), Error> {
     };
 
     let config_json = serde_json::to_string_pretty(&config).unwrap();
-    let config_file = Path::new(".modm/config.json");
+    let file_path = ".modm/config.json";
+    let full_path = current_dir.join(file_path);
+    let config_file = Path::new(full_path.to_str().unwrap());
 
     if config_file.is_file() {
         println!("Config file already exists");
