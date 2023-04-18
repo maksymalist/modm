@@ -4,7 +4,7 @@ description = "A git like cli tool for machine learning version control"
 repository = "https://github.com/maksymalist/modm"
 keywords = ["cli", "ML", "model"]
 license = "MIT"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["maksymalist"]
 
